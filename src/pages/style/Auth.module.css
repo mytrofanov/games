@@ -1,0 +1,13 @@
+.loginBlock{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+.loginForm{
+    position: absolute;
+    top: 40%;
+    margin-left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+
+}
