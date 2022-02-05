@@ -1,11 +1,11 @@
-import {INFO_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "./utils/consts";
+import {ANALYTICS_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "./utils/consts";
 import Auth from "./pages/Auth.tsx";
-import Info from "./pages/Info.tsx";
+import Analytics from "./pages/Analytics.tsx";
 
 
 export const publicRoutes = [
-    {path: INFO_ROUTE,
-        Component: Info
+    {path: ANALYTICS_ROUTE,
+        Component: Analytics
     },
     {path: LOGIN_ROUTE,
         Component: Auth
