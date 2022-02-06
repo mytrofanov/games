@@ -2,7 +2,7 @@ import {$authHost} from './index'
 import jwtDecode from "jwt-decode";
 import {AxiosResponse} from "axios";
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0MUBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY0NDA0NTMxOCwiZXhwIjoxNjQ0MTMxNzE4fQ.QQKN3uDEE7NAHgpOSmiphNB5pPAZtQMQayf757hT7Ok'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0MUBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY0NDE1MTE2MSwiZXhwIjoxNjQ1MDE1MTYxfQ.3kWWQkZai9MK-v9RoqYecVd4iwBoZ5RgA_62PTzwKh0'
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

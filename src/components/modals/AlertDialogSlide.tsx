@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide({setOpenAlert, AlertInfo, openAlert,}) {
+export default function AlertDialogSlide({setOpenAlert, alertInfo, openAlert,}) {
 
     const handleClose = () => {
         setOpenAlert(false);
@@ -35,7 +35,7 @@ export default function AlertDialogSlide({setOpenAlert, AlertInfo, openAlert,}) 
                 <DialogTitle>{"Message from server"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {AlertInfo}
+                        {alertInfo}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

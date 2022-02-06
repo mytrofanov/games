@@ -1,38 +1,41 @@
-import React, {useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
+import * as React from 'react';
 import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router";
 import {ANALYTICS_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
+// @ts-ignore
 import s from "./style/Auth.module.css"
-import FormDialog from "../components/modals/FormDialog.tsx";
+// @ts-ignore
 import {login, registration} from "../http/userAPI.ts";
-import Spinner from '../components/Spinner.tsx'
-import AlertDialogSlide from "../components/modals/AlertModal.tsx";
-import SimpleSlide from "../components/modals/Transition.tsx";
+// @ts-ignore
+import AlertDialogSlide from "../components/modals/AlertDialogSlide.tsx";
+// @ts-ignore
 import LoginModal from "../components/modals/LoginModal.tsx";
+// @ts-ignore
 import SkeletonVariants from "../components/Skeleton.tsx";
+import {observer} from "mobx-react";
+import {Context} from "../index.js";
 
-
-export const Auth: React.FC<any> = () => {
+export const Auth: React.FC<any> = observer(() => {
     const location = useLocation()
     const history = useNavigate()
     const isLoginPath = location.pathname === LOGIN_ROUTE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     let [loading, setLoading] = useState(false);
-    let [user, setUser] = useState({
-        id: 0,
-        email: '',
-        password: ''
-    })
-    const [openAlert, setOpenAlert] = React.useState(false);
     const [showLogin, setShowLogin] = React.useState(true);
-    const [AlertInfo, setAlertInfo] = React.useState('');
-
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //Max not included, min included
+    const [openAlert, setOpenAlert] = React.useState(false);
+    const [alertInfo, setAlertInfo] = React.useState('');
+    // @ts-ignore
+    const {user} = useContext(Context)
+    const userIsOk = (data) =>{
+        user.setUser(data)
+        user.setIsAuth(true)
+        setShowLogin(true)
+        setLoading(false)
+        history(ANALYTICS_ROUTE)
     }
+
 
     const click = async () => {
         setLoading(true)
@@ -41,21 +44,19 @@ export const Auth: React.FC<any> = () => {
                 await login(email, password)
                     .then(async data => {
                             console.log('loginData:', data)
-                            console.log('loginData.EMAIL:', data.email)
-                            console.log('useStateEmail:', email)
                             if (data.email === email && data.id) {
-                                setUser(data)
-                                setLoading(false)
-                                history(ANALYTICS_ROUTE)
+                                userIsOk(data)
+                            } else {
+                                setOpenAlert(true)
+                                setAlertInfo('Неверные данные!')
                             }
                         }
                     )
             } else {
                 await registration(email, password).then(data => {
+                    console.log('RegistrationData:', data)
                     if (data.email === email && data.id) {
-                        setUser(data)
-                        setLoading(false)
-                        history(ANALYTICS_ROUTE)
+                        userIsOk(data)
                     } else {
                         setOpenAlert(true)
                         setAlertInfo('Регистрация пользователя с email: ' + data.email + ' не удалась!')
@@ -70,23 +71,19 @@ export const Auth: React.FC<any> = () => {
 
 
     return (
-
         <div className={s.loginBlock}>
             {loading && <SkeletonVariants/>}
             <div className={s.loginForm}>
-
                 <LoginModal showLogin={showLogin}
                             setShowLogin={setShowLogin}
                             setEmail={setEmail}
                             setPassword={setPassword}
                             click={click}
                             isLoginPath={isLoginPath}/>
-                <AlertDialogSlide setOpenAlert={setOpenAlert} openAlert={openAlert} AlertInfo={AlertInfo}/>
+                <AlertDialogSlide setOpenAlert={setOpenAlert} openAlert={openAlert} alertInfo={alertInfo}/>
             </div>
-
-
         </div>
     );
-};
+});
 
 export default Auth;

@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import {TransitionProps} from '@mui/material/transitions';
 import {NavLink} from "react-router-dom";
+// @ts-ignore
 import s from '../../pages/style/Auth.module.css'
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from '../../utils/consts.js';
 import TextField from "@mui/material/TextField";
@@ -81,11 +82,11 @@ export default function LoginModal({showLogin,setShowLogin,
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         {isLoginPath ? <Button onClick={() => {
-                                handleClose()
+
                                 click()
                             }}>Login</Button> :
                             <Button onClick={() => {
-                                handleClose()
+
                                 click()
                             }}>Register</Button>
                         }
