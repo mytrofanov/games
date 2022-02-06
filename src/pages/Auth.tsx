@@ -6,6 +6,11 @@ import s from "./style/Auth.module.css"
 import FormDialog from "../components/modals/FormDialog.tsx";
 import {login, registration} from "../http/userAPI.ts";
 import Spinner from '../components/Spinner.tsx'
+import AlertDialogSlide from "../components/modals/AlertModal.tsx";
+import SimpleSlide from "../components/modals/Transition.tsx";
+import LoginModal from "../components/modals/LoginModal.tsx";
+import SkeletonVariants from "../components/Skeleton.tsx";
+
 
 export const Auth: React.FC<any> = () => {
     const location = useLocation()
@@ -19,6 +24,9 @@ export const Auth: React.FC<any> = () => {
         email: '',
         password: ''
     })
+    const [openAlert, setOpenAlert] = React.useState(false);
+    const [showLogin, setShowLogin] = React.useState(true);
+    const [AlertInfo, setAlertInfo] = React.useState('');
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -29,26 +37,28 @@ export const Auth: React.FC<any> = () => {
     const click = async () => {
         setLoading(true)
         try {
-            let data;
             if (isLoginPath) {
                 await login(email, password)
                     .then(async data => {
                             console.log('loginData:', data)
                             console.log('loginData.EMAIL:', data.email)
                             console.log('useStateEmail:', email)
-                            if (data !== undefined && data.email === email && data.id) {
+                            if (data.email === email && data.id) {
                                 setUser(data)
-                                    history(ANALYTICS_ROUTE)
+                                setLoading(false)
+                                history(ANALYTICS_ROUTE)
                             }
                         }
                     )
             } else {
                 await registration(email, password).then(data => {
-                    console.log('regData: ', data)
-                    if (data !== undefined && data.email === email && data.id) {
+                    if (data.email === email && data.id) {
                         setUser(data)
-                        console.log('Новый пользователь с адресом: ' + data.email + ' зарегистрирован!')
+                        setLoading(false)
                         history(ANALYTICS_ROUTE)
+                    } else {
+                        setOpenAlert(true)
+                        setAlertInfo('Регистрация пользователя с email: ' + data.email + ' не удалась!')
                     }
                 })
 
@@ -62,12 +72,18 @@ export const Auth: React.FC<any> = () => {
     return (
 
         <div className={s.loginBlock}>
+            {loading && <SkeletonVariants/>}
             <div className={s.loginForm}>
-                <FormDialog setEmail={setEmail}
+
+                <LoginModal showLogin={showLogin}
+                            setShowLogin={setShowLogin}
+                            setEmail={setEmail}
                             setPassword={setPassword}
                             click={click}
                             isLoginPath={isLoginPath}/>
+                <AlertDialogSlide setOpenAlert={setOpenAlert} openAlert={openAlert} AlertInfo={AlertInfo}/>
             </div>
+
 
         </div>
     );
