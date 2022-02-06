@@ -13,7 +13,7 @@ import s from '../../pages/style/Auth.module.css'
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from '../../utils/consts.js';
 import TextField from "@mui/material/TextField";
 
-const timeout={ enter: 300, exit: 1500, }
+
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -44,7 +44,7 @@ export default function LoginModal({showLogin,setShowLogin,
                 <DialogTitle sx={{textAlign: 'center'}}>
                     {isLoginPath ? <span>Login</span> : <span>Register</span>}
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent sx={{paddingBottom:0}}>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -58,6 +58,7 @@ export default function LoginModal({showLogin,setShowLogin,
                             setEmail(e.target.value)
                         }}
                     /><TextField
+                    sx={{marginBottom:'2%'}}
                     autoFocus
                     margin="dense"
                     id="password"
@@ -70,7 +71,6 @@ export default function LoginModal({showLogin,setShowLogin,
                         setPassword(e.target.value)
                     }}
                 />
-
                     <DialogContentText>
                         {isLoginPath ? <span className={s.registerNow}>Not registered? <NavLink to={REGISTRATION_ROUTE}>
                         Register now</NavLink></span> :
@@ -82,11 +82,9 @@ export default function LoginModal({showLogin,setShowLogin,
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         {isLoginPath ? <Button onClick={() => {
-
                                 click()
                             }}>Login</Button> :
                             <Button onClick={() => {
-
                                 click()
                             }}>Register</Button>
                         }

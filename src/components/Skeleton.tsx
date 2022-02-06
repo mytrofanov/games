@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+// @ts-ignore
 import page from './img/small_page_cr.jpg'
+// @ts-ignore
 import text from './img/small_text_cr.jpg'
 
 export default function SkeletonVariants() {
