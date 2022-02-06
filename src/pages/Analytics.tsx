@@ -20,6 +20,7 @@ import {createTheme, ThemeProvider} from "@material-ui/core/styles";
 // @ts-ignore
 import text from '../components/img/small_text_cr.jpg'
 
+
 const Analytics: React.FC<any> = observer(() => {
     const {user} = useContext(Context)
     const history = useNavigate()
@@ -117,15 +118,17 @@ const Analytics: React.FC<any> = observer(() => {
                 [`@media screen and (max-width: ${breakpoints.values.xs}px)`]: {
                     fontSize: '1rem'
                 }
-            }}
+            }
+        }
     });
-    let renderRow = (item,index) => {
+    let renderRow = (item, index) => {
+
         return (
             <ListItem key={index} component="div">
                 <ListItemButton>
-                <ThemeProvider theme={theme}>
-                <Typography  variant="h5">Item: {index+1}  text: {item}</Typography>
-                </ThemeProvider>
+                    <ThemeProvider theme={theme}>
+                        <Typography variant="h5">Item: {index + 1} text: {item}</Typography>
+                    </ThemeProvider>
                 </ListItemButton>
             </ListItem>
         )
@@ -139,15 +142,19 @@ const Analytics: React.FC<any> = observer(() => {
                         <Line options={options} data={data}/>
                     </div>
                     <div className={s.listBlock}>
-                        {loading &&  <img
-                            style={{
-                                width: '70%',
-                                marginLeft: '10%'
-                            }}
-                            alt={'analytics data'}
-                            src={text}
-                        /> }
-                         {textFromServer.map((item,index) => renderRow(item,index))}
+                        {loading &&
+                            <div>
+                                <img
+                                    style={{
+                                        width: '70%',
+                                        marginLeft: '10%'
+                                    }}
+                                    alt={'analytics data'}
+                                    src={text}
+                                />
+                            </div>
+                        }
+                        {textFromServer.map((item, index) => renderRow(item, index))}
                     </div>
                 </>
             }
