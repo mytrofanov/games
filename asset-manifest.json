@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/games/static/css/main.0a21823b.css",
+    "main.js": "/games/static/js/main.6e1abf54.js",
+    "static/media/small_page_cr.jpg": "/games/static/media/small_page_cr.6f4477d820f9000b635d.jpg",
+    "index.html": "/games/index.html",
+    "main.0a21823b.css.map": "/games/static/css/main.0a21823b.css.map",
+    "main.6e1abf54.js.map": "/games/static/js/main.6e1abf54.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0a21823b.css",
+    "static/js/main.6e1abf54.js"
+  ]
+}
